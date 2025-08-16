@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS-Friendly Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <h1>ATS-Friendly Resume Builder</h1>
+        <div class="actions">
+            <button id="saveBtn" aria-label="Save Resume" class="btn-primary">Save</button>
+            <button id="loadBtn" aria-label="Load Resume" class="btn-primary">Load</button>
+            <input type="file" id="fileInput" accept=".json" style="display: none;">
+            <button id="exportBtn" aria-label="Export as Text" class="btn-secondary">Export Text</button>
+            <button id="exportDocxBtn" aria-label="Export as DOCX" class="btn-secondary">Export DOCX</button>
+            <button id="printBtn" aria-label="Print Resume" class="btn-success">Print PDF</button>
+            <select id="templateSelector" aria-label="Select Template" class="template-select">
+                <option value="clean">Clean Professional</option>
+                <option value="modern">Modern Minimal</option>
+                <option value="compact">Compact</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <section id="formPanel" class="form-panel">
+            <div class="panel-header">
+                <h2>Resume Details</h2>
+                <button id="previewToggle" class="preview-toggle" aria-label="Toggle Preview">Preview</button>
+            </div>
+
+            <div class="accordion">
+                <!-- Profile Section -->
+                <div class="accordion-item open">
+                    <div class="accordion-header">
+                        <h3>Profile</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="form-group">
+                            <label for="profileName">Full Name</label>
+                            <input type="text" id="profileName" class="form-control" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileTitle">Professional Title</label>
+                            <input type="text" id="profileTitle" class="form-control" placeholder="Software Engineer">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="profileEmail">Email</label>
+                                <input type="email" id="profileEmail" class="form-control" placeholder="john@example.com">
+                            </div>
+                            <div class="form-group half">
+                                <label for="profilePhone">Phone</label>
+                                <input type="tel" id="profilePhone" class="form-control" placeholder="(555) 123-4567">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileLocation">Location</label>
+                            <input type="text" id="profileLocation" class="form-control" placeholder="San Francisco, CA">
+                        </div>
+                        <div class="form-group">
+                            <label>Photo (Optional)</label>
+                            <div class="photo-option">
+                                <input type="checkbox" id="includePhoto">
+                                <label for="includePhoto">Include photo (not recommended for ATS)</label>
+                            </div>
+                            <input type="file" id="photoUpload" accept="image/*" disabled>
+                        </div>
+                        <div class="form-group links-group">
+                            <label>Links</label>
+                            <div id="profileLinks">
+                                <!-- Links will be added here -->
+                            </div>
+                            <button id="addLinkBtn" class="add-btn">Add Link</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Professional Summary</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="form-group">
+                            <label for="summary">Summary (Recommended: 3-5 sentences)</label>
+                            <textarea id="summary" class="form-control" rows="4" 
+                                placeholder="Experienced software engineer with a passion for creating efficient, scalable applications..."></textarea>
+                            <div class="character-count"><span id="summaryCount">0</span> characters</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Skills</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="form-group">
+                            <label for="skillInput">Add Skills</label>
+                            <div class="skill-input-group">
+                                <input type="text" id="skillInput" class="form-control" placeholder="JavaScript">
+                                <button id="addSkillBtn">Add</button>
+                            </div>
+                            <div class="skill-suggestions">
+                                <p>Suggestions: JavaScript, HTML, CSS, React, Python, SQL, Project Management</p>
+                            </div>
+                            <div id="skillTags" class="skill-tags">
+                                <!-- Skills will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Section -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Work Experience</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div id="experienceItems">
+                            <!-- Experience entries will be added here -->
+                        </div>
+                        <button id="addExperienceBtn" class="add-btn">Add Experience</button>
+                    </div>
+                </div>
+
+                <!-- Education Section -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Education</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div id="educationItems">
+                            <!-- Education entries will be added here -->
+                        </div>
+                        <button id="addEducationBtn" class="add-btn">Add Education</button>
+                    </div>
+                </div>
+
+                <!-- Projects Section -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Projects</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div id="projectItems">
+                            <!-- Project entries will be added here -->
+                        </div>
+                        <button id="addProjectBtn" class="add-btn">Add Project</button>
+                    </div>
+                </div>
+
+                <!-- Certifications Section -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Certifications</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div id="certificationItems">
+                            <!-- Certification entries will be added here -->
+                        </div>
+                        <button id="addCertificationBtn" class="add-btn">Add Certification</button>
+                    </div>
+                </div>
+
+                <!-- Languages Section -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Languages</h3>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div id="languageItems">
+                            <!-- Language entries will be added here -->
+                        </div>
+                        <button id="addLanguageBtn" class="add-btn">Add Language</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="previewPanel" class="preview-panel clean">
+            <div class="resume-document">
+                <header class="resume-header">
+                    <div class="resume-header-content">
+                        <div class="resume-name-title">
+                            <h1 id="previewName">Your Name</h1>
+                            <p id="previewTitle">Professional Title</p>
+                        </div>
+                        <div class="resume-contact">
+                            <p id="previewContact">
+                                <span id="previewEmail">email@example.com</span> •
+                                <span id="previewPhone">(123) 456-7890</span> •
+                                <span id="previewLocation">City, State</span>
+                            </p>
+                            <div id="previewLinks" class="resume-links">
+                                <!-- Links will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div id="previewPhotoContainer" class="resume-photo" style="display: none;">
+                        <img id="previewPhoto" alt="Professional headshot" src="">
+                    </div>
+                </header>
+
+                <main class="resume-body">
+                    <section id="summarySection" class="resume-section">
+                        <h2>Summary</h2>
+                        <p id="previewSummary">Professional summary will appear here.</p>
+                    </section>
+
+                    <section id="skillsSection" class="resume-section">
+                        <h2>Skills</h2>
+                        <div id="previewSkills" class="skills-list">
+                            <!-- Skills will be displayed here -->
+                        </div>
+                    </section>
+
+                    <section id="experienceSection" class="resume-section">
+                        <h2>Experience</h2>
+                        <div id="previewExperience">
+                            <!-- Experience entries will be displayed here -->
+                        </div>
+                    </section>
+
+                    <section id="educationSection" class="resume-section">
+                        <h2>Education</h2>
+                        <div id="previewEducation">
+                            <!-- Education entries will be displayed here -->
+                        </div>
+                    </section>
+
+                    <section id="projectsSection" class="resume-section">
+                        <h2>Projects</h2>
+                        <div id="previewProjects">
+                            <!-- Projects will be displayed here -->
+                        </div>
+                    </section>
+
+                    <section id="certificationsSection" class="resume-section">
+                        <h2>Certifications</h2>
+                        <div id="previewCertifications">
+                            <!-- Certifications will be displayed here -->
+                        </div>
+                    </section>
+
+                    <section id="languagesSection" class="resume-section">
+                        <h2>Languages</h2>
+                        <div id="previewLanguages">
+                            <!-- Languages will be displayed here -->
+                        </div>
+                    </section>
+                </main>
+
+                <footer class="resume-footer">
+                    <p class="resume-date">Last Updated: <span id="resumeDate">2025-08-16</span></p>
+                </footer>
+            </div>
+        </section>
+    </main>
+
+    <!-- Templates for dynamic elements -->
+    <template id="linkTemplate">
+        <div class="link-item">
+            <input type="text" class="link-label" placeholder="LinkedIn">
+            <input type="url" class="link-url" placeholder="https://linkedin.com/in/username">
+            <button class="remove-btn" aria-label="Remove link">✕</button>
+        </div>
+    </template>
+
+    <template id="experienceTemplate">
+        <div class="experience-entry form-group-container">
+            <div class="entry-header">
+                <h4>Experience</h4>
+                <div class="entry-controls">
+                    <button class="move-up-btn" aria-label="Move up">↑</button>
+                    <button class="move-down-btn" aria-label="Move down">↓</button>
+                    <button class="remove-btn" aria-label="Remove experience">✕</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="role">Job Title</label>
+                    <input type="text" class="role form-control" placeholder="Software Engineer">
+                </div>
+                <div class="form-group half">
+                    <label for="company">Company</label>
+                    <input type="text" class="company form-control" placeholder="Company Name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="location">Location</label>
+                    <input type="text" class="location form-control" placeholder="City, State">
+                </div>
+                <div class="form-group half date-group">
+                    <label for="dates">Dates</label>
+                    <div class="date-inputs">
+                        <input type="text" class="start-date form-control" placeholder="MM/YYYY">
+                        <span>to</span>
+                        <input type="text" class="end-date form-control" placeholder="Present">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Responsibilities & Achievements</label>
+                <div class="bullets-container">
+                    <!-- Bullet points will be added here -->
+                </div>
+                <button class="add-bullet-btn">Add Bullet</button>
+                <div class="verb-suggestions">
+                    <p>Start with action verbs: Developed, Implemented, Led, Managed, Improved, Reduced, Increased</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="bulletTemplate">
+        <div class="bullet-input">
+            <input type="text" class="bullet form-control" placeholder="Developed a feature that increased user engagement by 20%">
+            <button class="remove-bullet-btn" aria-label="Remove bullet">✕</button>
+        </div>
+    </template>
+
+    <template id="educationTemplate">
+        <div class="education-entry form-group-container">
+            <div class="entry-header">
+                <h4>Education</h4>
+                <div class="entry-controls">
+                    <button class="move-up-btn" aria-label="Move up">↑</button>
+                    <button class="move-down-btn" aria-label="Move down">↓</button>
+                    <button class="remove-btn" aria-label="Remove education">✕</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="degree">Degree</label>
+                    <input type="text" class="degree form-control" placeholder="Bachelor of Science in Computer Science">
+                </div>
+                <div class="form-group half">
+                    <label for="school">School</label>
+                    <input type="text" class="school form-control" placeholder="University Name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="location">Location</label>
+                    <input type="text" class="location form-control" placeholder="City, State">
+                </div>
+                <div class="form-group half date-group">
+                    <label for="dates">Dates</label>
+                    <div class="date-inputs">
+                        <input type="text" class="start-date form-control" placeholder="MM/YYYY">
+                        <span>to</span>
+                        <input type="text" class="end-date form-control" placeholder="MM/YYYY">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="details">Additional Details (GPA, Honors, etc.)</label>
+                <input type="text" class="details form-control" placeholder="GPA: 3.8/4.0, Dean's List">
+            </div>
+        </div>
+    </template>
+
+    <template id="projectTemplate">
+        <div class="project-entry form-group-container">
+            <div class="entry-header">
+                <h4>Project</h4>
+                <div class="entry-controls">
+                    <button class="move-up-btn" aria-label="Move up">↑</button>
+                    <button class="move-down-btn" aria-label="Move down">↓</button>
+                    <button class="remove-btn" aria-label="Remove project">✕</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="projectName">Project Name</label>
+                    <input type="text" class="project-name form-control" placeholder="Project Name">
+                </div>
+                <div class="form-group half">
+                    <label for="projectLink">Project Link (Optional)</label>
+                    <input type="url" class="project-link form-control" placeholder="https://project-url.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Technologies Used</label>
+                <div class="tech-input-group">
+                    <input type="text" class="tech-input form-control" placeholder="React">
+                    <button class="add-tech-btn">Add</button>
+                </div>
+                <div class="tech-tags">
+                    <!-- Tech tags will be added here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description & Achievements</label>
+                <div class="bullets-container">
+                    <!-- Bullet points will be added here -->
+                </div>
+                <button class="add-bullet-btn">Add Bullet</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="certificationTemplate">
+        <div class="certification-entry form-group-container">
+            <div class="entry-header">
+                <h4>Certification</h4>
+                <div class="entry-controls">
+                    <button class="move-up-btn" aria-label="Move up">↑</button>
+                    <button class="move-down-btn" aria-label="Move down">↓</button>
+                    <button class="remove-btn" aria-label="Remove certification">✕</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="certName">Certification Name</label>
+                    <input type="text" class="cert-name form-control" placeholder="AWS Certified Solutions Architect">
+                </div>
+                <div class="form-group half">
+                    <label for="certIssuer">Issuing Organization</label>
+                    <input type="text" class="cert-issuer form-control" placeholder="Amazon Web Services">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="certYear">Year</label>
+                <input type="text" class="cert-year form-control" placeholder="2023">
+            </div>
+        </div>
+    </template>
+
+    <template id="languageTemplate">
+        <div class="language-entry form-group-container">
+            <div class="entry-header">
+                <h4>Language</h4>
+                <div class="entry-controls">
+                    <button class="move-up-btn" aria-label="Move up">↑</button>
+                    <button class="move-down-btn" aria-label="Move down">↓</button>
+                    <button class="remove-btn" aria-label="Remove language">✕</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="languageName">Language</label>
+                    <input type="text" class="language-name form-control" placeholder="English">
+                </div>
+                <div class="form-group half">
+                    <label for="proficiency">Proficiency Level</label>
+                    <select class="proficiency form-control">
+                        <option value="Native">Native</option>
+                        <option value="Fluent">Fluent</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Basic">Basic</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Add the docx library -->
+    <script src="https://unpkg.com/docx@5.0.2/build/index.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
