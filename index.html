@@ -453,7 +453,7 @@
 
             if (resumeData.projects.length > 0) {
                 html += `<div class="section-title">Projects</div>`;
-                resumeData.projects.forEach(p => html += `<div class="section-content mb-2"><div class="font-bold mb-1">${p.title}</div>${format list(p.desc)}</div>`);
+                resumeData.projects.forEach(p => html += `<div class="section-content mb-2"><div class="font-bold mb-1">${p.title}</div>${formatList(p.desc)}</div>`);
             }
 
             if (resumeData.awards.length > 0) {
