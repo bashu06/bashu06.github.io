@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Builder</title>
+    <title>Resume Builder Pro - .NET Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -28,105 +28,79 @@
             justify-content: center;
             padding-top: 2rem;
             padding-bottom: 2rem;
-            background-color: #525659; /* Acrobat Reader grey */
+            background-color: #525659;
+            position: relative;
         }
 
         .resume-paper {
             background: white;
-            width: 210mm; /* A4 width */
-            min-height: 297mm; /* A4 height */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            width: 210mm;
+            min-height: 297mm;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             box-sizing: border-box;
             margin-bottom: 2rem;
-            /* Default Padding (can be overridden by template) */
             padding: 0.5in; 
+            transform-origin: top center;
         }
+
+        /* Responsive Scaling for Preview */
+        @media screen and (max-width: 1200px) { .resume-paper { transform: scale(0.8); margin-bottom: -50mm; } }
+        @media screen and (max-width: 900px) { .resume-paper { transform: scale(0.6); margin-bottom: -100mm; } }
+        @media screen and (max-width: 600px) { .resume-paper { transform: scale(0.45); margin-bottom: -150mm; } }
 
         /* ============================================================
-           TEMPLATE 1: CLASSIC (YOUR DEFAULT)
-           (Scoped precisely to your original CSS)
+           TEMPLATE 1: CLASSIC (ATS OPTIMIZED)
            ============================================================ */
-        .t-classic {
-            font-family: 'Times New Roman', Times, serif;
-            color: #000;
-            line-height: 1.15;
-            font-size: 11pt;
-        }
-
-        .t-classic .resume-header { text-align: center; margin-bottom: 12pt; }
-        .t-classic .resume-name { font-size: 18pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4pt; }
-        .t-classic .resume-title { font-size: 12pt; font-weight: bold; margin-bottom: 4pt; }
-        .t-classic .resume-contact { font-size: 10pt; }
-        .t-classic .resume-contact a { color: #000; text-decoration: none; }
-        
-        .t-classic .section-title { 
-            font-size: 11pt; font-weight: bold; text-transform: uppercase; 
-            border-bottom: 1px solid #000; margin-top: 12pt; 
-            margin-bottom: 6pt; padding-bottom: 2pt; letter-spacing: 0.5px; 
-        }
-        
-        .t-classic .section-content { margin-bottom: 4pt; text-align: justify; }
-        
-        .t-classic .entry-header { 
-            display: flex; justify-content: space-between; 
-            align-items: baseline; margin-top: 6pt; 
-        }
-        .t-classic .entry-title { font-weight: bold; }
-        .t-classic .entry-subtitle { font-style: italic; }
-        .t-classic .entry-date { text-align: right; white-space: nowrap; flex-shrink: 0; margin-left: 1rem; }
-        
-        .t-classic .bullet-list { list-style-type: disc; margin-top: 2pt; margin-bottom: 2pt; padding-left: 1.2rem; }
-        .t-classic .bullet-list li { margin-bottom: 2pt; }
-        
-        .t-classic .skill-row { margin-bottom: 3pt; }
+        .t-classic { font-family: 'Times New Roman', Times, serif; color: #111827; line-height: 1.25; font-size: 11pt; }
+        .t-classic h1, .t-classic h2 { margin: 0; padding: 0; display: block; color: #000; }
+        .t-classic .resume-header { text-align: center; margin-bottom: 14pt; }
+        .t-classic h1.resume-name { font-size: 20pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4pt; line-height: 1.2; }
+        .t-classic .resume-title { font-size: 12pt; font-weight: bold; margin-bottom: 6pt; }
+        .t-classic .resume-contact { font-size: 10pt; color: #4b5563; }
+        .t-classic a { color: #2563eb; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+        .t-classic a:hover { border-bottom: 1px solid #2563eb; }
+        .t-classic h2.section-title { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid #111827; margin-top: 14pt; margin-bottom: 8pt; padding-bottom: 3pt; letter-spacing: 0.5px; }
+        .t-classic .section-content { margin-bottom: 6pt; text-align: justify; }
+        .t-classic .entry-header { display: flex; justify-content: space-between; align-items: baseline; margin-top: 8pt; }
+        .t-classic .entry-title { font-weight: bold; font-size: 11.5pt; }
+        .t-classic .entry-subtitle { font-style: italic; color: #374151; }
+        .t-classic .entry-date { text-align: right; white-space: nowrap; flex-shrink: 0; margin-left: 1rem; font-weight: bold; color: #374151; }
+        .t-classic .bullet-list { list-style-type: disc; margin-top: 4pt; margin-bottom: 4pt; padding-left: 1.5rem; }
+        .t-classic .bullet-list li { margin-bottom: 3pt; }
+        .t-classic .skill-row { margin-bottom: 4pt; }
         .t-classic .skill-category { font-weight: bold; }
 
         /* ============================================================
-           TEMPLATE 2: MODERN (OPTIONAL)
+           TEMPLATE 2: MODERN
            ============================================================ */
-        .t-modern {
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            color: #333;
-            line-height: 1.4;
-            font-size: 10pt;
-        }
-
-        .t-modern .resume-header {
-            display: flex; justify-content: space-between; align-items: flex-start;
-            border-bottom: 3px solid #3b82f6; padding-bottom: 1.5rem; margin-bottom: 1.5rem;
-        }
-        
-        .t-modern .resume-name { font-size: 26pt; font-weight: 800; color: #1e293b; line-height: 1; text-transform: uppercase; }
-        .t-modern .resume-title { font-size: 12pt; color: #3b82f6; font-weight: 600; letter-spacing: 1px; margin-top: 4px; text-transform: uppercase; }
-        
-        .t-modern .contact-grid { text-align: right; font-size: 9pt; color: #64748b; line-height: 1.5; }
-        
-        .t-modern .section-title {
-            font-size: 12pt; font-weight: 700; color: #3b82f6; 
-            text-transform: uppercase; letter-spacing: 1px;
-            margin-top: 1.5rem; margin-bottom: 0.75rem;
-            display: flex; align-items: center;
-        }
-        .t-modern .section-title::after { content: ""; flex: 1; height: 1px; background: #e2e8f0; margin-left: 10px; }
-        
-        .t-modern .entry-header { display: flex; justify-content: space-between; font-weight: 700; color: #334155; margin-bottom: 2px; }
-        .t-modern .entry-subtitle { font-style: normal; color: #3b82f6; font-weight: 600; font-size: 9pt; margin-bottom: 4px; }
-        
-        .t-modern .skill-tag { 
-            display: inline-block; background: #eff6ff; color: #1d4ed8; 
-            padding: 3px 8px; border-radius: 4px; font-size: 8pt; 
-            font-weight: 600; margin-right: 5px; margin-bottom: 5px; 
-        }
+        .t-modern { font-family: 'Inter', 'Segoe UI', sans-serif; color: #334155; line-height: 1.5; font-size: 10pt; }
+        .t-modern h1, .t-modern h2 { margin: 0; padding: 0; }
+        .t-modern a { color: #3b82f6; text-decoration: none; font-weight: 500; }
+        .t-modern .resume-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #4f46e5; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+        .t-modern h1.resume-name { font-size: 28pt; font-weight: 800; color: #0f172a; line-height: 1; text-transform: uppercase; letter-spacing: -0.5px; }
+        .t-modern .resume-title { font-size: 13pt; color: #4f46e5; font-weight: 600; letter-spacing: 1px; margin-top: 6px; text-transform: uppercase; }
+        .t-modern .contact-grid { text-align: right; font-size: 9pt; color: #64748b; line-height: 1.6; }
+        .t-modern h2.section-title { font-size: 12pt; font-weight: 700; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; margin-top: 1.75rem; margin-bottom: 1rem; display: flex; align-items: center; }
+        .t-modern h2.section-title::after { content: ""; flex: 1; height: 2px; background: #e2e8f0; margin-left: 12px; }
+        .t-modern .entry-header { display: flex; justify-content: space-between; font-weight: 700; color: #1e293b; margin-bottom: 2px; font-size: 11pt; }
+        .t-modern .entry-subtitle { font-style: normal; color: #4f46e5; font-weight: 600; font-size: 9.5pt; margin-bottom: 6px; }
+        .t-modern .skill-tag { display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 6px; font-size: 8.5pt; font-weight: 600; margin-right: 6px; margin-bottom: 6px; }
+        .t-modern .bullet-list { list-style-type: none; padding-left: 0; }
+        .t-modern .bullet-list li { position: relative; padding-left: 1rem; margin-bottom: 4px; }
+        .t-modern .bullet-list li::before { content: "▹"; position: absolute; left: 0; color: #4f46e5; font-weight: bold; }
 
         /* --- PRINT STYLES --- */
         @media print {
+            @page { size: A4 portrait; margin: 0; }
             body { background: white; height: auto; overflow: visible; }
-            .editor-panel, .no-print { display: none !important; }
+            .editor-panel, .no-print, #overflowWarning { display: none !important; }
             .preview-container { display: block; padding: 0; margin: 0; background: white; height: auto; overflow: visible; }
-            .resume-paper { width: 100%; box-shadow: none; margin: 0; padding: 0; min-height: auto; }
-            @page { margin: 0.5in; }
+            .resume-paper { width: 210mm !important; height: 297mm !important; min-height: auto; box-shadow: none; margin: 0; transform: scale(1) !important; page-break-after: always; }
             * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
+
+        /* Smooth Input Transitions */
+        input, textarea, select { transition: all 0.2s ease-in-out; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row">
@@ -135,219 +109,301 @@
         
         <div class="flex flex-col gap-4 mb-6 border-b pb-4">
             <div class="flex justify-between items-center">
-                <h1 class="text-xl font-bold text-gray-800"><i class="fas fa-file-pen mr-2"></i>Builder</h1>
-                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-semibold transition shadow-sm">
-                    <i class="fas fa-download mr-1"></i> PDF
-                </button>
+                <h1 class="text-xl font-bold text-gray-800"><i class="fas fa-code mr-2 text-indigo-600"></i>Builder</h1>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="resetData()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-2 rounded text-xs font-semibold transition no-print" title="Reset Data"><i class="fas fa-rotate-right"></i></button>
+                    <button onclick="exportToTxt()" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded text-xs font-semibold transition shadow-sm no-print"><i class="fas fa-align-left mr-1"></i> TXT</button>
+                    <button onclick="exportToDoc()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded text-xs font-semibold transition shadow-sm no-print"><i class="fas fa-file-word mr-1"></i> DOC</button>
+                    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-xs font-semibold transition shadow-sm no-print"><i class="fas fa-download mr-1"></i> PDF</button>
+                </div>
             </div>
             
-            <div class="bg-blue-50 p-3 rounded-md border border-blue-100">
-                <label class="block text-xs font-bold text-blue-800 uppercase mb-1">Choose Template</label>
-                <select id="templateSelector" onchange="changeTemplate(this.value)" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                    <option value="classic" selected>Default (Classic Professional)</option>
-                    <option value="modern">Modern (Blue Accent)</option>
-                </select>
+            <div class="bg-indigo-50 p-3 rounded-md border border-indigo-100 flex justify-between items-end gap-2">
+                <div class="flex-1 flex gap-2">
+                    <div class="w-1/2">
+                        <label class="block text-xs font-bold text-indigo-800 uppercase mb-1">Template</label>
+                        <select id="templateSelector" onchange="changeTemplate(this.value)" class="w-full p-2 border border-indigo-200 rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer">
+                            <option value="classic" selected>Classic (ATS)</option>
+                            <option value="modern">Modern (Indigo)</option>
+                        </select>
+                    </div>
+                    <div class="w-1/2">
+                        <label class="block text-xs font-bold text-indigo-800 uppercase mb-1">Date Format</label>
+                        <!-- ADDED: The Date Separator Option -->
+                        <select id="dateSeparator" onchange="updateResume()" class="w-full p-2 border border-indigo-200 rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer">
+                            <option value="/">Slash (08/2024)</option>
+                            <option value=" ">Space (Aug 2024)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="saveIndicator" class="text-xs text-emerald-600 font-bold hidden pb-2"><i class="fas fa-check-circle mr-1"></i>Saved</div>
             </div>
         </div>
 
         <form id="resumeForm" onsubmit="return false;">
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider">Header</h2>
+            <!-- HEADER -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider">Personal Info</h2>
                 <div class="space-y-3">
-                    <input type="text" id="fullName" placeholder="Full Name" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateResume()">
-                    <input type="text" id="jobTitle" placeholder="Professional Title" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateResume()">
+                    <input type="text" id="fullName" placeholder="Full Name" class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" oninput="updateResume()">
+                    <input type="text" id="jobTitle" placeholder="Professional Title" class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" oninput="updateResume()">
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="location" placeholder="City, State" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateResume()">
-                        <input type="text" id="phone" placeholder="Phone" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateResume()">
+                        <input type="text" id="location" placeholder="City, State" class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" oninput="updateResume()">
+                        <input type="text" id="phone" placeholder="Phone" class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" oninput="updateResume()">
                     </div>
-                    <input type="text" id="email" placeholder="Email" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateResume()">
-                    <input type="text" id="link" placeholder="Portfolio / LinkedIn URL" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" oninput="updateResume()">
+                    <input type="text" id="email" placeholder="Email" class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" oninput="updateResume()">
+                    <input type="text" id="link" placeholder="LinkedIn / Portfolio URL" class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none" oninput="updateResume()">
                 </div>
             </div>
 
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider">Summary</h2>
-                <textarea id="summary" rows="4" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm" placeholder="Brief professional summary..." oninput="updateResume()"></textarea>
+            <!-- SUMMARY -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider">Professional Summary</h2>
+                <textarea id="summary" rows="4" class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-y" placeholder="Brief professional summary..." oninput="updateResume()"></textarea>
             </div>
 
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider flex justify-between">
-                    Core Skills 
-                    <button onclick="addItem('skills')" class="text-blue-600 text-xs hover:underline">+ Add Category</button>
+            <!-- SKILLS -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider flex justify-between items-center">
+                    Technical Skills 
+                    <button onclick="addItem('skills')" class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200 transition text-xs font-bold">+ Add</button>
                 </h2>
                 <div id="skillsList" class="space-y-3"></div>
             </div>
 
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider flex justify-between">
-                    Experience
-                    <button onclick="addItem('experience')" class="text-blue-600 text-xs hover:underline">+ Add Job</button>
+            <!-- EXPERIENCE -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider flex justify-between items-center">
+                    Experience 
+                    <button onclick="addItem('experience')" class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200 transition text-xs font-bold">+ Add Job</button>
                 </h2>
                 <div id="experienceList" class="space-y-4"></div>
             </div>
 
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider flex justify-between">
-                    Education
-                    <button onclick="addItem('education')" class="text-blue-600 text-xs hover:underline">+ Add Degree</button>
+            <!-- PROJECTS -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider flex justify-between items-center">
+                    Projects 
+                    <button onclick="addItem('projects')" class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200 transition text-xs font-bold">+ Add Project</button>
+                </h2>
+                <div id="projectsList" class="space-y-4"></div>
+            </div>
+
+            <!-- EDUCATION -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider flex justify-between items-center">
+                    Education 
+                    <button onclick="addItem('education')" class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200 transition text-xs font-bold">+ Add Degree</button>
                 </h2>
                 <div id="educationList" class="space-y-4"></div>
             </div>
 
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider flex justify-between">
-                    Certifications
-                    <button onclick="addItem('certifications')" class="text-blue-600 text-xs hover:underline">+ Add Cert</button>
+            <!-- CERTIFICATIONS -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider flex justify-between items-center">
+                    Certifications 
+                    <button onclick="addItem('certifications')" class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200 transition text-xs font-bold">+ Add Cert</button>
                 </h2>
                 <div id="certificationsList" class="space-y-2"></div>
             </div>
-
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider flex justify-between">
-                    Projects
-                    <button onclick="addItem('projects')" class="text-blue-600 text-xs hover:underline">+ Add Project</button>
+            
+            <!-- LANGUAGES -->
+            <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <h2 class="text-xs font-bold text-gray-400 uppercase mb-3 tracking-wider flex justify-between items-center">
+                    Languages 
+                    <button onclick="addItem('languages')" class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200 transition text-xs font-bold">+ Add Language</button>
                 </h2>
-                <div id="projectsList" class="space-y-3"></div>
-            </div>
-
-            <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <h2 class="text-sm font-bold text-gray-500 uppercase mb-3 tracking-wider flex justify-between">
-                    Awards
-                    <button onclick="addItem('awards')" class="text-blue-600 text-xs hover:underline">+ Add Award</button>
-                </h2>
-                <div id="awardsList" class="space-y-2"></div>
+                <div id="languagesList" class="space-y-2"></div>
             </div>
         </form>
     </div>
 
     <div class="w-full md:w-7/12 lg:w-8/12 preview-container">
-        <div id="resumePaper" class="resume-paper t-classic">
-            </div>
+        <!-- Overflow Warning Banner -->
+        <div id="overflowWarning" class="hidden absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-5 py-2 rounded-full shadow-lg font-bold text-sm z-50 flex items-center transition-all">
+            <i class="fas fa-exclamation-triangle mr-2"></i> Warning: Resume exceeds 1 page (A4)
+        </div>
+        
+        <div id="resumePaper" class="resume-paper t-classic"></div>
     </div>
 
     <script>
-        // --- INITIAL STATE ---
-        const initialState = {
+        // --- DEFAULT STATE: .NET Developer Persona ---
+        const defaultState = {
+            dateSeparator: "/",
             fullName: "VIKAS GUPTA",
-            jobTitle: "Senior Machine Learning Engineer",
+            jobTitle: "Senior .NET Software Engineer",
             location: "New York, NY",
             phone: "(123) 456-7890",
-            email: "vikas@techstalks.com",
-            link: "linkedin.com/in/vikas",
-            summary: "Results-driven Data Scientist with 5+ years of experience solving business challenges using machine learning, statistical analysis, and data-driven strategies. Skilled in building predictive models, recommendation systems, and NLP tools.",
+            email: "vikas.gupta@devmail.com",
+            link: "github.com/vikas-dotnet",
+            summary: "Results-driven Software Engineer with 6+ years of experience specializing in the .NET ecosystem. Proven track record of designing scalable RESTful APIs, optimizing SQL Server database performance, and deploying cloud-native enterprise applications on Microsoft Azure.",
             skills: [
-                { category: "Programming", items: "Python, R, SQL, TensorFlow, PyTorch" },
-                { category: "Data Science", items: "Regression/Classification, Clustering, NLP" },
-                { category: "Tools", items: "Tableau, Power BI, Git, Docker, AWS" }
+                { category: "Backend", items: "C#, .NET 8, ASP.NET Core, Entity Framework Core, LINQ, REST APIs" },
+                { category: "Frontend", items: "Angular, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS" },
+                { category: "Database", items: "SQL Server, T-SQL, PostgreSQL, Redis Caching" },
+                { category: "DevOps & Cloud", items: "Azure (App Services, Functions), Docker, CI/CD, Git, GitHub Actions" }
             ],
             experience: [
-                {
-                    title: "Data Scientist",
-                    company: "ApplTron Solutions",
-                    date: "Jun 2020 – Present",
-                    desc: "Built a customer churn prediction model (XGBoost) with 85% accuracy, improving retention by 28%.\nCreated a real-time Tableau dashboard to track marketing campaigns, cutting decision time by 40%."
+                { 
+                    title: "Senior Software Engineer", company: "FinTech Solutions Inc.", 
+                    startM: "08", startY: "2021", endM: "", endY: "Present", 
+                    desc: "Architected and migrated legacy monolith applications to scalable microservices using .NET 8 and Docker, reducing deployment time by 40%.\nOptimized Entity Framework queries and implemented Redis caching, decreasing API response times by 60% for high-traffic endpoints.\nMentored 3 junior developers through code reviews and pair programming, establishing clean architecture principles." 
                 },
-                {
-                    title: "Data Analyst",
-                    company: "Tata Consultancy Services (TCS)",
-                    date: "May 2017 – May 2020",
-                    desc: "Automated data pipelines, reducing manual reporting efforts by 60% for banking clients.\nConducted A/B tests to optimize marketing strategies, increasing conversions by 15%."
+                { 
+                    title: ".NET Developer", company: "Enterprise Systems LLC", 
+                    startM: "05", startY: "2018", endM: "07", endY: "2021", 
+                    desc: "Developed and maintained RESTful web APIs using ASP.NET Core for a SaaS platform serving 50,000+ daily active users.\nIntegrated third-party payment gateways (Stripe, PayPal) ensuring secure and robust transaction processing.\nAutomated database deployments and schema changes using Entity Framework Migrations and Azure DevOps pipelines." 
                 }
             ],
             education: [
-                { degree: "Bachelor of Technology (Computer Science)", institution: "Indian Institute of Technology (IIT)", date: "2015" }
-            ],
-            certifications: [
-                { name: "AWS Certified Machine Learning", date: "2023" },
-                { name: "Google Professional Data Engineer", date: "2022" }
+                { degree: "B.S. in Computer Science", institution: "Tech University", startM: "08", startY: "2014", endM: "05", endY: "2018", score: "GPA: 3.8/4.0" }
             ],
             projects: [
-                { title: "Movie Recommender System", desc: "Built a Netflix-style recommender using collaborative filtering (Python, Scikit-learn, Flask)." }
+                { 
+                    title: "Cloud Inventory Management System", tech: "C#, .NET Core, Azure SQL, Angular", 
+                    github: "github.com/vikas-dotnet/inventory-sys", demo: "", 
+                    desc: "Built a full-stack SaaS application for real-time inventory tracking. Implemented role-based authorization using JWT and ASP.NET Core Identity." 
+                }
             ],
-            awards: [
-                { name: "Winner, DataHack 2022 (Analytics Vidhya)" }
+            certifications: [
+                { name: "Microsoft Certified: Azure Developer Associate", month: "11", year: "2023" },
+                { name: "Certified C# Developer (W3C)", month: "04", year: "2020" }
+            ],
+            languages: [
+                { language: "English", proficiency: "Native" },
+                { language: "Hindi", proficiency: "Fluent" }
             ]
         };
 
-        let resumeData = JSON.parse(JSON.stringify(initialState));
-        let currentTemplate = 'classic'; // Default is Classic
+        let resumeData = {};
+        let currentTemplate = 'classic';
+        let saveTimeout;
 
-        // --- INIT ---
+        // --- INIT & LOCAL STORAGE ---
         document.addEventListener('DOMContentLoaded', () => {
+            const savedData = localStorage.getItem('resumeBuilderData_DotNet');
+            if (savedData) {
+                try {
+                    resumeData = JSON.parse(savedData);
+                } catch (e) {
+                    resumeData = JSON.parse(JSON.stringify(defaultState));
+                }
+            } else {
+                resumeData = JSON.parse(JSON.stringify(defaultState));
+            }
             renderEditor();
-            updateResume();
+            updateResume(false); 
         });
+
+        function resetData() {
+            if(confirm("Are you sure you want to revert to the default .NET Developer data?")) {
+                resumeData = JSON.parse(JSON.stringify(defaultState));
+                renderEditor();
+                updateResume();
+            }
+        }
 
         // --- EDITOR RENDERERS ---
         function renderEditor() {
-            // Fill static inputs
-            document.getElementById('fullName').value = resumeData.fullName;
-            document.getElementById('jobTitle').value = resumeData.jobTitle;
-            document.getElementById('location').value = resumeData.location;
-            document.getElementById('phone').value = resumeData.phone;
-            document.getElementById('email').value = resumeData.email;
-            document.getElementById('link').value = resumeData.link;
-            document.getElementById('summary').value = resumeData.summary;
+            document.getElementById('dateSeparator').value = resumeData.dateSeparator || '/';
+            document.getElementById('fullName').value = resumeData.fullName || '';
+            document.getElementById('jobTitle').value = resumeData.jobTitle || '';
+            document.getElementById('location').value = resumeData.location || '';
+            document.getElementById('phone').value = resumeData.phone || '';
+            document.getElementById('email').value = resumeData.email || '';
+            document.getElementById('link').value = resumeData.link || '';
+            document.getElementById('summary').value = resumeData.summary || '';
 
-            // Render Dynamic Lists
             renderList('skillsList', resumeData.skills, (item, index) => `
-                <div class="flex gap-2 items-start">
-                    <input type="text" placeholder="Category" class="w-1/3 p-2 border rounded text-xs font-bold" value="${item.category}" oninput="updateItem('skills', ${index}, 'category', this.value)">
-                    <input type="text" placeholder="Items" class="w-full p-2 border rounded text-xs" value="${item.items}" oninput="updateItem('skills', ${index}, 'items', this.value)">
-                    <button onclick="removeItem('skills', ${index})" class="text-red-500 hover:text-red-700 p-1"><i class="fas fa-trash"></i></button>
+                <div class="flex gap-2 items-start relative group bg-white border p-2 rounded-lg">
+                    <input type="text" placeholder="Category" class="w-1/3 p-2 border-b border-transparent focus:border-indigo-500 text-xs font-bold outline-none" value="${item.category}" oninput="updateItem('skills', ${index}, 'category', this.value)">
+                    <input type="text" placeholder="Comma separated skills" class="w-full p-2 border-b border-transparent focus:border-indigo-500 text-xs outline-none" value="${item.items}" oninput="updateItem('skills', ${index}, 'items', this.value)">
+                    <button onclick="removeItem('skills', ${index})" class="text-gray-300 hover:text-red-500 p-2 transition"><i class="fas fa-trash"></i></button>
                 </div>
             `);
 
             renderList('experienceList', resumeData.experience, (item, index) => `
-                <div class="border p-3 rounded bg-white shadow-sm relative group">
-                    <button onclick="removeItem('experience', ${index})" class="absolute top-2 right-2 text-gray-300 hover:text-red-500"><i class="fas fa-trash"></i></button>
-                    <input type="text" placeholder="Job Title" class="w-full p-1 border-b mb-2 text-sm font-bold focus:outline-none focus:border-blue-500" value="${item.title}" oninput="updateItem('experience', ${index}, 'title', this.value)">
-                    <input type="text" placeholder="Company" class="w-full p-1 border-b mb-2 text-xs focus:outline-none focus:border-blue-500" value="${item.company}" oninput="updateItem('experience', ${index}, 'company', this.value)">
-                    <input type="text" placeholder="Date" class="w-full p-1 border-b mb-2 text-xs text-gray-500 focus:outline-none focus:border-blue-500" value="${item.date}" oninput="updateItem('experience', ${index}, 'date', this.value)">
-                    <textarea placeholder="Description (Enter for bullets)" rows="3" class="w-full p-1 border rounded text-xs resize-y focus:outline-none focus:border-blue-500" oninput="updateItem('experience', ${index}, 'desc', this.value)">${item.desc}</textarea>
-                </div>
-            `);
-
-            renderList('educationList', resumeData.education, (item, index) => `
-                <div class="border p-3 rounded bg-white shadow-sm relative">
-                    <button onclick="removeItem('education', ${index})" class="absolute top-2 right-2 text-gray-300 hover:text-red-500"><i class="fas fa-trash"></i></button>
-                    <input type="text" placeholder="Degree" class="w-full p-1 border-b mb-1 text-sm font-bold focus:outline-none focus:border-blue-500" value="${item.degree}" oninput="updateItem('education', ${index}, 'degree', this.value)">
-                    <input type="text" placeholder="Institution" class="w-full p-1 border-b mb-1 text-xs focus:outline-none focus:border-blue-500" value="${item.institution}" oninput="updateItem('education', ${index}, 'institution', this.value)">
-                    <input type="text" placeholder="Year" class="w-full p-1 border-b text-xs text-gray-500 focus:outline-none focus:border-blue-500" value="${item.date}" oninput="updateItem('education', ${index}, 'date', this.value)">
-                </div>
-            `);
-
-            renderList('certificationsList', resumeData.certifications, (item, index) => `
-                <div class="flex gap-2 items-center">
-                    <input type="text" placeholder="Name" class="w-full p-2 border rounded text-xs" value="${item.name}" oninput="updateItem('certifications', ${index}, 'name', this.value)">
-                    <input type="text" placeholder="Year" class="w-24 p-2 border rounded text-xs" value="${item.date}" oninput="updateItem('certifications', ${index}, 'date', this.value)">
-                    <button onclick="removeItem('certifications', ${index})" class="text-red-500 hover:text-red-700 p-1"><i class="fas fa-trash"></i></button>
+                <div class="border p-3 rounded-lg bg-white shadow-sm relative group transition hover:border-indigo-300">
+                    <button onclick="removeItem('experience', ${index})" class="absolute top-3 right-3 text-gray-300 hover:text-red-500 transition"><i class="fas fa-trash"></i></button>
+                    <input type="text" placeholder="Job Title" class="w-11/12 p-1 border-b mb-2 text-sm font-bold focus:border-indigo-500 outline-none transition" value="${item.title}" oninput="updateItem('experience', ${index}, 'title', this.value)">
+                    <input type="text" placeholder="Company" class="w-full p-1 border-b mb-2 text-xs focus:border-indigo-500 outline-none transition" value="${item.company}" oninput="updateItem('experience', ${index}, 'company', this.value)">
+                    <div class="flex gap-2 mb-3">
+                        <input type="text" placeholder="Start Mo" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.startM || ''}" oninput="updateItem('experience', ${index}, 'startM', this.value)">
+                        <input type="text" placeholder="Start Yr" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.startY || ''}" oninput="updateItem('experience', ${index}, 'startY', this.value)">
+                        <span class="text-gray-400 text-xs self-center">-</span>
+                        <input type="text" placeholder="End Mo" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.endM || ''}" oninput="updateItem('experience', ${index}, 'endM', this.value)">
+                        <input type="text" placeholder="End Yr (or Present)" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.endY || ''}" oninput="updateItem('experience', ${index}, 'endY', this.value)">
+                    </div>
+                    <textarea placeholder="Bullet points (press Enter for new bullet)" rows="3" class="w-full p-2 border bg-gray-50 rounded text-xs resize-y outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" oninput="updateItem('experience', ${index}, 'desc', this.value)">${item.desc}</textarea>
                 </div>
             `);
 
             renderList('projectsList', resumeData.projects, (item, index) => `
-                <div class="border p-2 rounded bg-white shadow-sm relative">
-                    <button onclick="removeItem('projects', ${index})" class="absolute top-2 right-2 text-gray-300 hover:text-red-500"><i class="fas fa-trash"></i></button>
-                    <input type="text" placeholder="Title" class="w-full p-1 border-b mb-1 text-sm font-bold focus:outline-none focus:border-blue-500" value="${item.title}" oninput="updateItem('projects', ${index}, 'title', this.value)">
-                    <textarea placeholder="Description" rows="2" class="w-full p-1 border rounded text-xs resize-y focus:outline-none focus:border-blue-500" oninput="updateItem('projects', ${index}, 'desc', this.value)">${item.desc}</textarea>
+                <div class="border p-3 rounded-lg bg-white shadow-sm relative hover:border-indigo-300 transition">
+                    <button onclick="removeItem('projects', ${index})" class="absolute top-3 right-3 text-gray-300 hover:text-red-500 transition"><i class="fas fa-trash"></i></button>
+                    <input type="text" placeholder="Project Name" class="w-11/12 p-1 border-b mb-2 text-sm font-bold outline-none focus:border-indigo-500 transition" value="${item.title}" oninput="updateItem('projects', ${index}, 'title', this.value)">
+                    <input type="text" placeholder="Tech Stack (e.g. C#, .NET, SQL)" class="w-full p-1 border-b mb-2 text-xs outline-none focus:border-indigo-500 transition" value="${item.tech || ''}" oninput="updateItem('projects', ${index}, 'tech', this.value)">
+                    <div class="flex gap-2 mb-3">
+                        <div class="w-1/2 flex items-center border-b focus-within:border-indigo-500 transition">
+                            <i class="fab fa-github text-gray-400 mr-2 text-xs"></i>
+                            <input type="text" placeholder="GitHub Link" class="w-full p-1 text-xs outline-none" value="${item.github || ''}" oninput="updateItem('projects', ${index}, 'github', this.value)">
+                        </div>
+                        <div class="w-1/2 flex items-center border-b focus-within:border-indigo-500 transition">
+                            <i class="fas fa-link text-gray-400 mr-2 text-xs"></i>
+                            <input type="text" placeholder="Live Demo" class="w-full p-1 text-xs outline-none" value="${item.demo || ''}" oninput="updateItem('projects', ${index}, 'demo', this.value)">
+                        </div>
+                    </div>
+                    <textarea placeholder="Description" rows="2" class="w-full p-2 border bg-gray-50 rounded text-xs outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" oninput="updateItem('projects', ${index}, 'desc', this.value)">${item.desc}</textarea>
                 </div>
             `);
 
-            renderList('awardsList', resumeData.awards, (item, index) => `
-                <div class="flex gap-2 items-center">
-                    <span class="text-gray-400 text-xs">•</span>
-                    <input type="text" placeholder="Award Name" class="w-full p-2 border rounded text-xs" value="${item.name}" oninput="updateItem('awards', ${index}, 'name', this.value)">
-                    <button onclick="removeItem('awards', ${index})" class="text-red-500 hover:text-red-700 p-1"><i class="fas fa-trash"></i></button>
+            renderList('educationList', resumeData.education, (item, index) => `
+                <div class="border p-3 rounded-lg bg-white shadow-sm relative hover:border-indigo-300 transition">
+                    <button onclick="removeItem('education', ${index})" class="absolute top-3 right-3 text-gray-300 hover:text-red-500 transition"><i class="fas fa-trash"></i></button>
+                    <input type="text" placeholder="Degree" class="w-11/12 p-1 border-b mb-2 text-sm font-bold focus:border-indigo-500 outline-none transition" value="${item.degree}" oninput="updateItem('education', ${index}, 'degree', this.value)">
+                    <input type="text" placeholder="Institution" class="w-full p-1 border-b mb-2 text-xs focus:border-indigo-500 outline-none transition" value="${item.institution}" oninput="updateItem('education', ${index}, 'institution', this.value)">
+                    <div class="flex gap-2 mb-2">
+                        <input type="text" placeholder="Start Mo" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.startM || ''}" oninput="updateItem('education', ${index}, 'startM', this.value)">
+                        <input type="text" placeholder="Start Yr" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.startY || ''}" oninput="updateItem('education', ${index}, 'startY', this.value)">
+                        <span class="text-gray-400 text-xs self-center">-</span>
+                        <input type="text" placeholder="End Mo" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.endM || ''}" oninput="updateItem('education', ${index}, 'endM', this.value)">
+                        <input type="text" placeholder="End Yr" class="w-1/4 p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.endY || ''}" oninput="updateItem('education', ${index}, 'endY', this.value)">
+                    </div>
+                    <input type="text" placeholder="Score (e.g. 85%, CGPA 8.0, Grade A)" class="w-full p-1 border-b text-xs outline-none focus:border-indigo-500 transition" value="${item.score || ''}" oninput="updateItem('education', ${index}, 'score', this.value)">
+                </div>
+            `);
+
+            renderList('certificationsList', resumeData.certifications, (item, index) => `
+                <div class="flex gap-2 items-center bg-white border p-2 rounded-lg">
+                    <input type="text" placeholder="Name" class="w-full p-2 border-b border-transparent focus:border-indigo-500 text-xs outline-none transition" value="${item.name}" oninput="updateItem('certifications', ${index}, 'name', this.value)">
+                    <input type="text" placeholder="Mo" class="w-16 p-2 border-b border-transparent focus:border-indigo-500 text-xs outline-none transition" value="${item.month || ''}" oninput="updateItem('certifications', ${index}, 'month', this.value)">
+                    <input type="text" placeholder="Yr" class="w-16 p-2 border-b border-transparent focus:border-indigo-500 text-xs outline-none transition" value="${item.year || ''}" oninput="updateItem('certifications', ${index}, 'year', this.value)">
+                    <button onclick="removeItem('certifications', ${index})" class="text-gray-300 hover:text-red-500 p-2 transition"><i class="fas fa-trash"></i></button>
+                </div>
+            `);
+            
+            renderList('languagesList', resumeData.languages || [], (item, index) => `
+                <div class="flex gap-2 items-center bg-white border p-2 rounded-lg">
+                    <input type="text" placeholder="Language" class="w-1/2 p-2 border-b border-transparent focus:border-indigo-500 text-xs outline-none transition" value="${item.language}" oninput="updateItem('languages', ${index}, 'language', this.value)">
+                    <select class="w-1/2 p-2 border-b border-transparent focus:border-indigo-500 text-xs outline-none transition bg-transparent" onchange="updateItem('languages', ${index}, 'proficiency', this.value)">
+                        <option value="Native" ${item.proficiency === 'Native' ? 'selected' : ''}>Native</option>
+                        <option value="Fluent" ${item.proficiency === 'Fluent' ? 'selected' : ''}>Fluent</option>
+                        <option value="Conversational" ${item.proficiency === 'Conversational' ? 'selected' : ''}>Conversational</option>
+                        <option value="Basic" ${item.proficiency === 'Basic' ? 'selected' : ''}>Basic</option>
+                    </select>
+                    <button onclick="removeItem('languages', ${index})" class="text-gray-300 hover:text-red-500 p-2 transition"><i class="fas fa-trash"></i></button>
                 </div>
             `);
         }
 
         function renderList(elementId, dataArray, templateFn) {
-            document.getElementById(elementId).innerHTML = dataArray.map((item, index) => templateFn(item, index)).join('');
+            document.getElementById(elementId).innerHTML = (dataArray || []).map((item, index) => templateFn(item, index)).join('');
         }
 
-        // --- DATA UPDATES ---
-        function updateResume() {
+        // --- DATA LOGIC ---
+        function updateResume(showSave = true) {
+            resumeData.dateSeparator = document.getElementById('dateSeparator').value;
             resumeData.fullName = document.getElementById('fullName').value;
             resumeData.jobTitle = document.getElementById('jobTitle').value;
             resumeData.location = document.getElementById('location').value;
@@ -355,183 +411,314 @@
             resumeData.email = document.getElementById('email').value;
             resumeData.link = document.getElementById('link').value;
             resumeData.summary = document.getElementById('summary').value;
+            
+            triggerSave(showSave);
             refreshPreview();
         }
 
         function updateItem(type, index, field, value) {
+            if(!resumeData[type]) resumeData[type] = [];
             resumeData[type][index][field] = value;
+            triggerSave(true);
             refreshPreview();
         }
 
         function addItem(type) {
+            if(!resumeData[type]) resumeData[type] = [];
             const templates = {
                 skills: { category: "", items: "" },
-                experience: { title: "New Job", company: "Company", date: "Present", desc: "" },
-                education: { degree: "Degree", institution: "University", date: "Year" },
-                certifications: { name: "Certificate", date: "Year" },
-                projects: { title: "Project Name", desc: "Description" },
-                awards: { name: "Award Name" }
+                experience: { title: "", company: "", startM: "", startY: "", endM: "", endY: "Present", desc: "" },
+                education: { degree: "", institution: "", startM: "", startY: "", endM: "", endY: "", score: "" },
+                projects: { title: "", tech: "", github: "", demo: "", desc: "" },
+                certifications: { name: "", month: "", year: "" },
+                languages: { language: "", proficiency: "Fluent" }
             };
             resumeData[type].push({...templates[type]});
             renderEditor();
+            triggerSave(true);
             refreshPreview();
         }
 
         function removeItem(type, index) {
             resumeData[type].splice(index, 1);
             renderEditor();
+            triggerSave(true);
             refreshPreview();
         }
 
-        // --- TEMPLATE LOGIC ---
+        function triggerSave(show) {
+            localStorage.setItem('resumeBuilderData_DotNet', JSON.stringify(resumeData));
+            if(show) {
+                const ind = document.getElementById('saveIndicator');
+                ind.classList.remove('hidden');
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => ind.classList.add('hidden'), 2000);
+            }
+        }
+
         function changeTemplate(tpl) {
             currentTemplate = tpl;
-            const paper = document.getElementById('resumePaper');
-            paper.className = `resume-paper t-${tpl}`; // Switches CSS Scope
+            document.getElementById('resumePaper').className = `resume-paper t-${tpl}`;
             refreshPreview();
+        }
+
+        // --- OVERFLOW DETECTION ---
+        function checkOverflow() {
+            const paper = document.getElementById('resumePaper');
+            const warning = document.getElementById('overflowWarning');
+            if (paper.scrollHeight > 1120) {
+                warning.classList.remove('hidden');
+            } else {
+                warning.classList.add('hidden');
+            }
         }
 
         function refreshPreview() {
             const container = document.getElementById('resumePaper');
             container.innerHTML = (currentTemplate === 'classic') ? renderClassic() : renderModern();
+            setTimeout(checkOverflow, 50); 
+        }
+
+        // --- HELPERS ---
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag]));
         }
 
         function formatList(text) {
             if(!text) return '';
             const lines = text.split('\n').filter(line => line.trim() !== '');
-            return `<ul class="bullet-list">` + lines.map(line => `<li>${line.startsWith('•') ? line.substring(1) : line}</li>`).join('') + `</ul>`;
+            return `<ul class="bullet-list">` + lines.map(line => `<li>${escapeHTML(line.startsWith('•') ? line.substring(1) : line.trim())}</li>`).join('') + `</ul>`;
+        }
+        
+        function formatDates(startM, startY, endM, endY) {
+            const sep = resumeData.dateSeparator || '/';
+            let s = [startM, startY].filter(Boolean).join(sep);
+            let e = [endM, endY].filter(Boolean).join(sep);
+            if (s && e) return `${s} – ${e}`;
+            if (e) return e; 
+            return s; 
         }
 
-        // --- RENDERER: CLASSIC (User's Original) ---
+        // --- RENDERERS ---
         function renderClassic() {
-            const contactParts = [resumeData.location, resumeData.phone, `<a href="mailto:${resumeData.email}">${resumeData.email}</a>`];
-            if(resumeData.link) contactParts.push(`<a href="${resumeData.link.startsWith('http') ? resumeData.link : 'https://'+resumeData.link}" target="_blank">${resumeData.link}</a>`);
+            let html = `<div class="resume-header">
+                <h1 class="resume-name">${escapeHTML(resumeData.fullName)}</h1>
+                <div class="resume-title">${escapeHTML(resumeData.jobTitle)}</div>
+                <div class="resume-contact">
+                    ${[escapeHTML(resumeData.location), escapeHTML(resumeData.phone), resumeData.email ? `<a href="mailto:${escapeHTML(resumeData.email)}">${escapeHTML(resumeData.email)}</a>` : null, resumeData.link ? `<a href="https://${escapeHTML(resumeData.link.replace('https://',''))}" target="_blank">${escapeHTML(resumeData.link)}</a>` : null].filter(Boolean).join(' &nbsp;|&nbsp; ')}
+                </div>
+            </div>`;
 
-            let html = `
-                <div class="resume-header">
-                    <div class="resume-name">${resumeData.fullName}</div>
-                    <div class="resume-title">${resumeData.jobTitle}</div>
-                    <div class="resume-contact">${contactParts.filter(Boolean).join(' | ')}</div>
-                </div>`;
+            if (resumeData.summary) html += `<h2 class="section-title">Summary</h2><div class="section-content">${escapeHTML(resumeData.summary)}</div>`;
 
-            if (resumeData.summary) html += `<div class="section-title">Professional Summary</div><div class="section-content">${resumeData.summary}</div>`;
-
-            if (resumeData.skills.length > 0) {
-                html += `<div class="section-title">Core Skills</div><div class="section-content">`;
-                resumeData.skills.forEach(s => html += `<div class="skill-row"><span class="skill-category">• ${s.category}:</span> ${s.items}</div>`);
+            if (resumeData.skills && resumeData.skills.length > 0) {
+                html += `<h2 class="section-title">Technical Skills</h2><div class="section-content">`;
+                resumeData.skills.forEach(s => html += `<div class="skill-row"><span class="skill-category">${escapeHTML(s.category)}:</span> ${escapeHTML(s.items)}</div>`);
                 html += `</div>`;
             }
 
-            if (resumeData.experience.length > 0) {
-                html += `<div class="section-title">Professional Experience</div>`;
+            if (resumeData.experience && resumeData.experience.length > 0) {
+                html += `<h2 class="section-title">Experience</h2>`;
                 resumeData.experience.forEach(exp => {
                     html += `<div class="section-content">
                         <div class="entry-header">
-                            <div><span class="entry-title">${exp.title}</span> | ${exp.company}</div>
-                            <div class="entry-date">${exp.date}</div>
+                            <div><span class="entry-title">${escapeHTML(exp.title)}</span> | ${escapeHTML(exp.company)}</div>
+                            <div class="entry-date">${escapeHTML(formatDates(exp.startM, exp.startY, exp.endM, exp.endY))}</div>
                         </div>
                         ${formatList(exp.desc)}
                     </div>`;
                 });
             }
 
-            if (resumeData.education.length > 0) {
-                html += `<div class="section-title">Education</div>`;
-                resumeData.education.forEach(edu => {
-                    html += `<div class="section-content">
-                        <div class="entry-header"><div class="entry-title">${edu.degree}</div><div class="entry-date">${edu.date}</div></div>
-                        <div class="entry-subtitle">${edu.institution}</div>
+            if (resumeData.projects && resumeData.projects.length > 0) {
+                html += `<h2 class="section-title">Projects</h2>`;
+                resumeData.projects.forEach(p => {
+                    const links = [p.github ? `<a href="https://${escapeHTML(p.github.replace('https://',''))}">GitHub</a>` : null, p.demo ? `<a href="https://${escapeHTML(p.demo.replace('https://',''))}">Live Demo</a>` : null].filter(Boolean).join(' | ');
+                    html += `<div class="section-content mb-2">
+                        <div class="entry-header" style="margin-top:0;">
+                            <div><span class="entry-title">${escapeHTML(p.title)}</span> ${p.tech ? `<span style="font-style:italic; color:#4b5563;">| ${escapeHTML(p.tech)}</span>` : ''}</div>
+                            <div class="entry-date" style="font-size:9pt">${links}</div>
+                        </div>
+                        ${formatList(p.desc)}
                     </div>`;
                 });
             }
 
-            if (resumeData.certifications.length > 0) {
-                html += `<div class="section-title">Certification</div><div class="section-content"><ul class="bullet-list">`;
-                resumeData.certifications.forEach(c => html += `<li class="flex justify-between"><span>${c.name}</span><span>${c.date}</span></li>`);
-                html += `</ul></div>`;
+            if (resumeData.education && resumeData.education.length > 0) {
+                html += `<h2 class="section-title">Education</h2>`;
+                resumeData.education.forEach(edu => {
+                    html += `<div class="section-content">
+                        <div class="entry-header"><div class="entry-title">${escapeHTML(edu.degree)} ${edu.score ? `(${escapeHTML(edu.score)})` : ''}</div><div class="entry-date">${escapeHTML(formatDates(edu.startM, edu.startY, edu.endM, edu.endY))}</div></div>
+                        <div class="entry-subtitle">${escapeHTML(edu.institution)}</div>
+                    </div>`;
+                });
             }
 
-            if (resumeData.projects.length > 0) {
-                html += `<div class="section-title">Projects</div>`;
-                resumeData.projects.forEach(p => html += `<div class="section-content mb-2"><div class="font-bold mb-1">${p.title}</div>${formatList(p.desc)}</div>`);
+            if (resumeData.certifications && resumeData.certifications.length > 0) {
+                html += `<h2 class="section-title">Certifications</h2><ul class="bullet-list" style="padding-left:0; list-style:none;">`;
+                resumeData.certifications.forEach(c => html += `<li><span style="font-weight:bold">${escapeHTML(c.name)}</span> &nbsp;|&nbsp; ${escapeHTML(formatDates('', '', c.month, c.year))}</li>`);
+                html += `</ul>`;
             }
-
-            if (resumeData.awards.length > 0) {
-                html += `<div class="section-title">Awards</div><div class="section-content"><ul class="bullet-list">`;
-                resumeData.awards.forEach(a => html += `<li>${a.name}</li>`);
-                html += `</ul></div>`;
+            
+            if (resumeData.languages && resumeData.languages.length > 0) {
+                html += `<h2 class="section-title">Languages</h2><ul class="bullet-list" style="padding-left:0; list-style:none;">`;
+                resumeData.languages.forEach(l => html += `<li><span style="font-weight:bold">${escapeHTML(l.language)}</span> &nbsp;|&nbsp; ${escapeHTML(l.proficiency)}</li>`);
+                html += `</ul>`;
             }
 
             return html;
         }
 
-        // --- RENDERER: MODERN (Optional) ---
         function renderModern() {
-            let html = `
-                <div class="resume-header">
-                    <div>
-                        <div class="resume-name">${resumeData.fullName}</div>
-                        <div class="resume-title">${resumeData.jobTitle}</div>
-                    </div>
-                    <div class="contact-grid">
-                        <div>${resumeData.location}</div>
-                        <div>${resumeData.phone}</div>
-                        <div>${resumeData.email}</div>
-                        <div class="text-blue-600">${resumeData.link}</div>
-                    </div>
-                </div>`;
+            let html = `<div class="resume-header">
+                <div><h1 class="resume-name">${escapeHTML(resumeData.fullName)}</h1><div class="resume-title">${escapeHTML(resumeData.jobTitle)}</div></div>
+                <div class="contact-grid">
+                    <div>${escapeHTML(resumeData.location)}</div>
+                    <div>${escapeHTML(resumeData.phone)}</div>
+                    <div>${resumeData.email ? `<a href="mailto:${escapeHTML(resumeData.email)}">${escapeHTML(resumeData.email)}</a>` : ''}</div>
+                    <div>${resumeData.link ? `<a href="https://${escapeHTML(resumeData.link.replace('https://',''))}" target="_blank">${escapeHTML(resumeData.link)}</a>` : ''}</div>
+                </div>
+            </div>`;
 
-            if (resumeData.summary) html += `<div class="section-title"><i class="fas fa-user mr-2"></i> Profile</div><div class="mb-4 text-justify">${resumeData.summary}</div>`;
+            if (resumeData.summary) html += `<h2 class="section-title">Profile</h2><div class="mb-4 text-justify">${escapeHTML(resumeData.summary)}</div>`;
 
-            if (resumeData.experience.length > 0) {
-                html += `<div class="section-title"><i class="fas fa-briefcase mr-2"></i> Experience</div>`;
+            if (resumeData.experience && resumeData.experience.length > 0) {
+                html += `<h2 class="section-title">Experience</h2>`;
                 resumeData.experience.forEach(exp => {
                     html += `<div class="mb-4">
-                        <div class="entry-header"><span>${exp.title}</span><span class="text-sm font-normal text-gray-500">${exp.date}</span></div>
-                        <div class="entry-subtitle">${exp.company}</div>
+                        <div class="entry-header"><span>${escapeHTML(exp.title)}</span><span class="text-sm font-normal text-gray-500">${escapeHTML(formatDates(exp.startM, exp.startY, exp.endM, exp.endY))}</span></div>
+                        <div class="entry-subtitle">${escapeHTML(exp.company)}</div>
                         ${formatList(exp.desc)}
                     </div>`;
                 });
             }
 
-            if (resumeData.skills.length > 0) {
-                html += `<div class="section-title"><i class="fas fa-tools mr-2"></i> Skills</div><div class="mb-4">`;
-                resumeData.skills.forEach(s => {
-                    html += `<div class="mb-2"><span class="font-bold text-gray-800 mr-2">${s.category}:</span>`;
-                    s.items.split(',').forEach(i => html += `<span class="skill-tag">${i.trim()}</span>`);
-                    html += `</div>`;
-                });
-                html += `</div>`;
-            }
-
-            if (resumeData.education.length > 0) {
-                html += `<div class="section-title"><i class="fas fa-graduation-cap mr-2"></i> Education</div>`;
-                resumeData.education.forEach(edu => {
-                    html += `<div class="mb-3 flex justify-between border-b border-gray-100 pb-2">
-                        <div><div class="font-bold text-gray-800">${edu.degree}</div><div class="text-sm text-gray-600">${edu.institution}</div></div>
-                        <div class="text-sm text-gray-500 font-bold">${edu.date}</div>
+            if (resumeData.projects && resumeData.projects.length > 0) {
+                html += `<h2 class="section-title">Projects</h2>`;
+                resumeData.projects.forEach(p => {
+                    const links = [p.github ? `<a href="https://${escapeHTML(p.github.replace('https://',''))}">GitHub</a>` : null, p.demo ? `<a href="https://${escapeHTML(p.demo.replace('https://',''))}">Demo</a>` : null].filter(Boolean).join(' | ');
+                    html += `<div class="mb-3">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <div class="font-bold text-sm text-slate-800">${escapeHTML(p.title)} <span class="text-slate-500 font-normal text-xs ml-2">${escapeHTML(p.tech)}</span></div>
+                            <div class="text-xs">${links}</div>
+                        </div>
+                        ${formatList(p.desc)}
                     </div>`;
                 });
             }
 
-            // Group Projects & Certs
-            if (resumeData.projects.length || resumeData.certifications.length) {
-                html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">`;
-                if(resumeData.projects.length) {
-                    html += `<div><div class="section-title"><i class="fas fa-lightbulb mr-2"></i> Projects</div>`;
-                    resumeData.projects.forEach(p => html += `<div class="mb-3"><div class="font-bold text-sm">${p.title}</div><div class="text-xs text-gray-600">${p.desc}</div></div>`);
+            if (resumeData.skills && resumeData.skills.length > 0) {
+                html += `<h2 class="section-title">Technical Skills</h2><div class="mb-4">`;
+                resumeData.skills.forEach(s => {
+                    html += `<div class="mb-2"><span class="font-bold text-slate-700 mr-2">${escapeHTML(s.category)}:</span>`;
+                    s.items.split(',').forEach(i => html += `<span class="skill-tag">${escapeHTML(i.trim())}</span>`);
                     html += `</div>`;
-                }
-                if(resumeData.certifications.length || resumeData.awards.length) {
-                    html += `<div><div class="section-title"><i class="fas fa-award mr-2"></i> Achievement</div><ul class="text-sm text-gray-600 list-disc pl-4">`;
-                    resumeData.certifications.forEach(c => html += `<li>${c.name} (${c.date})</li>`);
-                    resumeData.awards.forEach(a => html += `<li>${a.name}</li>`);
-                    html += `</ul></div>`;
-                }
+                });
+                html += `</div>`;
+            }
+
+            if (resumeData.education && resumeData.education.length > 0) {
+                html += `<h2 class="section-title">Education & Certifications</h2>`;
+                resumeData.education.forEach(edu => {
+                    html += `<div class="mb-3 flex justify-between border-b border-slate-200 pb-2">
+                        <div><div class="font-bold text-slate-800">${escapeHTML(edu.degree)} ${edu.score ? `<span class="text-xs font-normal bg-slate-100 text-slate-600 px-2 py-1 ml-2 rounded">${escapeHTML(edu.score)}</span>` : ''}</div><div class="text-sm text-slate-600">${escapeHTML(edu.institution)}</div></div>
+                        <div class="text-sm text-slate-500 font-bold">${escapeHTML(formatDates(edu.startM, edu.startY, edu.endM, edu.endY))}</div>
+                    </div>`;
+                });
+            }
+            
+            if (resumeData.certifications && resumeData.certifications.length > 0) {
+                html += `<ul class="text-sm text-slate-600 list-disc pl-4 mt-2">`;
+                resumeData.certifications.forEach(c => html += `<li><span class="font-semibold">${escapeHTML(c.name)}</span> (${escapeHTML(formatDates('', '', c.month, c.year))})</li>`);
+                html += `</ul>`;
+            }
+            
+            if (resumeData.languages && resumeData.languages.length > 0) {
+                html += `<h2 class="section-title">Languages</h2><div class="mb-4">`;
+                resumeData.languages.forEach(l => {
+                    html += `<span class="skill-tag bg-slate-50 border border-slate-200 text-slate-700">${escapeHTML(l.language)} (${escapeHTML(l.proficiency)})</span>`;
+                });
                 html += `</div>`;
             }
 
             return html;
+        }
+
+        // --- EXPORTERS ---
+        function exportToDoc() {
+            const element = document.getElementById('resumePaper');
+            const preHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+            <head><meta charset='utf-8'><title>Resume</title>
+            <style>body { font-family: 'Times New Roman', Times, serif; } a { color: #2563eb; text-decoration: none; } h1.resume-name { font-size: 24pt; font-weight: bold; text-align: center; margin: 0; padding: 0; } .resume-title { font-size: 14pt; text-align: center; font-weight: bold; margin-bottom: 10px; } .resume-contact { text-align: center; font-size: 11pt; margin-bottom: 20px; } h2.section-title { font-size: 14pt; font-weight: bold; border-bottom: 1px solid #000; margin-top: 15px; margin-bottom: 5px; text-transform: uppercase; } .entry-header { font-weight: bold; margin-top: 10px; } .bullet-list { margin-top: 5px; margin-bottom: 5px; }</style>
+            </head><body>`;
+            const html = preHtml + element.innerHTML + "</body></html>";
+            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = (resumeData.fullName ? resumeData.fullName.replace(/\s+/g, '_') : 'Resume') + '.doc';
+            link.click();
+        }
+
+        function exportToTxt() {
+            let txt = `${resumeData.fullName || 'Name'}\n${resumeData.jobTitle || ''}\n${resumeData.location || ''} | ${resumeData.phone || ''} | ${resumeData.email || ''} | ${resumeData.link || ''}\n\n`;
+            
+            if(resumeData.summary) txt += `SUMMARY\n${resumeData.summary}\n\n`;
+            
+            if(resumeData.skills && resumeData.skills.length > 0) {
+                txt += `TECHNICAL SKILLS\n`;
+                resumeData.skills.forEach(s => txt += `${s.category}: ${s.items}\n`);
+                txt += `\n`;
+            }
+
+            if(resumeData.experience && resumeData.experience.length > 0) {
+                txt += `EXPERIENCE\n`;
+                resumeData.experience.forEach(exp => {
+                    txt += `${exp.title} | ${exp.company} | ${formatDates(exp.startM, exp.startY, exp.endM, exp.endY)}\n`;
+                    if(exp.desc) txt += `${exp.desc.split('\n').map(l => '- ' + l).join('\n')}\n`;
+                    txt += `\n`;
+                });
+            }
+
+            if(resumeData.projects && resumeData.projects.length > 0) {
+                txt += `PROJECTS\n`;
+                resumeData.projects.forEach(p => {
+                    txt += `${p.title} | ${p.tech}\n`;
+                    if(p.github) txt += `GitHub: ${p.github}\n`;
+                    if(p.desc) txt += `${p.desc.split('\n').map(l => '- ' + l).join('\n')}\n`;
+                    txt += `\n`;
+                });
+            }
+
+            if(resumeData.education && resumeData.education.length > 0) {
+                txt += `EDUCATION\n`;
+                resumeData.education.forEach(edu => {
+                    txt += `${edu.degree} | ${edu.institution} | ${formatDates(edu.startM, edu.startY, edu.endM, edu.endY)} | ${edu.score}\n`;
+                });
+                txt += `\n`;
+            }
+            
+            if(resumeData.certifications && resumeData.certifications.length > 0) {
+                txt += `CERTIFICATIONS\n`;
+                resumeData.certifications.forEach(c => {
+                    txt += `${c.name} | ${formatDates('', '', c.month, c.year)}\n`;
+                });
+                txt += `\n`;
+            }
+            
+            if(resumeData.languages && resumeData.languages.length > 0) {
+                txt += `LANGUAGES\n`;
+                resumeData.languages.forEach(l => {
+                    txt += `${l.language} (${l.proficiency})\n`;
+                });
+                txt += `\n`;
+            }
+
+            const blob = new Blob([txt], { type: 'text/plain' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = (resumeData.fullName ? resumeData.fullName.replace(/\s+/g, '_') : 'Resume') + '_ATS.txt';
+            link.click();
         }
     </script>
 </body>
